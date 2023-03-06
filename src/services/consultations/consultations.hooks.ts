@@ -1,10 +1,10 @@
-import pagination from '../../hooks/pagination';
+import { HooksObject } from '@feathersjs/feathers';
 
 export default {
   before: {
     all: [],
-    find: [pagination],
-    get: [pagination],
+    find: [],
+    get: [],
     create: [],
     update: [],
     patch: [],

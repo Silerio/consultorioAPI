@@ -6,39 +6,33 @@ import { HookReturn } from 'sequelize/types/hooks';
 
 export default function (app: Application): typeof Model {
   const sequelizeClient: Sequelize = app.get('sequelizeClient');
-  const pacients = sequelizeClient.define('pacients', {
-    name: {
-      type: DataTypes.STRING,
+  const records = sequelizeClient.define('records', {
+    medicalNote: {
+      type: DataTypes.TEXT({ length: 'long' }),
       allowNull: false
     },
-    address: {
-      type: DataTypes.STRING,
+    physicalExploration: {
+      type: DataTypes.TEXT({ length: 'long' }),
       allowNull: false
     },
-    phone: {
-      type: DataTypes.STRING,
+    diagnosis: {
+      type: DataTypes.TEXT({ length: 'long' }),
       allowNull: false
     },
-    email: {
-      type: DataTypes.STRING,
+    treatment: {
+      type: DataTypes.TEXT({ length: 'long' }),
       allowNull: false
     },
-    ahf: {
-      type: DataTypes.TEXT({ length: 'long' }),
-      allowNull: true
-    },
-    app: {
-      type: DataTypes.TEXT({ length: 'long' }),
-      allowNull: true
-    },
-    apnp: {
-      type: DataTypes.TEXT({ length: 'long' }),
-      allowNull: true
-    },
-    ago: {
-      type: DataTypes.TEXT({ length: 'long' }),
-      allowNull: true
-    },
+    /*
+      laboratoryExams: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      imagingStudies: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+    */
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {
@@ -48,13 +42,13 @@ export default function (app: Application): typeof Model {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (pacients as any).associate = function (models: any): void {
+  (records as any).associate = function (models: any): void {
     const {
-      consultations,
+      consultations
     } = models;
 
-    pacients.hasMany(consultations);
+    records.belongsTo(consultations);
   };
 
-  return pacients;
+  return records;
 }
