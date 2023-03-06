@@ -1,10 +1,26 @@
 import pagination from '../../hooks/pagination';
 
+const getAssociations = (context:any) =>{
+  const sequelize = context.app.get('sequelizeClient');
+  const { 
+    consultations,
+  } = sequelize.models;
+
+  context.params.sequelize = { 
+    include: [
+      {
+        model: consultations,
+      },
+    ],
+    raw:false,
+  };
+};
+
 export default {
   before: {
     all: [],
-    find: [pagination],
-    get: [pagination],
+    find: [getAssociations, pagination],
+    get: [getAssociations, pagination],
     create: [],
     update: [],
     patch: [],
